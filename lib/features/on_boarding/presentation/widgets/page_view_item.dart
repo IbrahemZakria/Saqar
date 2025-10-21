@@ -144,13 +144,13 @@ class _PageViewItemState extends State<PageViewItem>
             _animatedText(
               _textFadeAnimation1,
               widget.onboardingModel.titel!,
-              screenHeight * 0.76,
+              screenHeight * 0.7,
             ),
           ],
           _animatedText(
             _textFadeAnimation2,
             widget.onboardingModel.suTitel,
-            screenHeight * 0.82,
+            screenHeight * 0.76,
           ),
         ],
       ),

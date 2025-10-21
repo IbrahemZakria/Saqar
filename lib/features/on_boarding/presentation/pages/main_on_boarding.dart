@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:saqar/core/helper/thems/app_text_syles.dart';
 import 'package:saqar/core/utils/assets.dart';
+import 'package:saqar/features/bottom_navigaton/features/main_bottom_navigation/presentation/pages/main_home_page.dart';
 import 'package:saqar/features/on_boarding/presentation/data/models/onboarding_model.dart';
 import 'package:saqar/features/on_boarding/presentation/widgets/doted_indicator.dart';
 import 'package:saqar/features/on_boarding/presentation/widgets/page_view_item.dart';
@@ -114,7 +116,7 @@ class _MainOnBoardingState extends State<MainOnBoarding> {
                       TextButton(
                         onPressed: () {
                           if (currentPage == models.length - 1) {
-                            // Navigator.pushNamed(context, SignUp.routeName);
+                            context.go(MainHomePage.routeName);
                           } else {
                             pageController.nextPage(
                               duration: const Duration(milliseconds: 300),
@@ -140,7 +142,7 @@ class _MainOnBoardingState extends State<MainOnBoarding> {
               visible: currentPage != models.length - 1,
               child: TextButton(
                 onPressed: () {
-                  // Navigator.pushNamed(context, SignUp.routeName);
+                  context.go(MainHomePage.routeName);
                 },
                 child: Text("Skip", style: AppTextSyles.textStyle16se(context)),
               ),
