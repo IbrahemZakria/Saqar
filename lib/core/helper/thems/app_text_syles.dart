@@ -18,6 +18,21 @@ class AppTextSyles {
     fontSize: getResponsiveFontSize(context, fontSize: 11),
     color: Colors.white,
   );
+  static TextStyle textStyle80se(BuildContext context) => TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: getResponsiveFontSize(context, fontSize: 80),
+    color: AppColors.kprimarycolor,
+  );
+  static TextStyle textStyle20b(BuildContext context) => TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: getResponsiveFontSize(context, fontSize: 20),
+    color: Colors.white,
+  );
+  static TextStyle textStyle14b(BuildContext context) => TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: getResponsiveFontSize(context, fontSize: 14),
+    color: Colors.white,
+  );
 }
 
 /// دالة حساب حجم الخط Responsive

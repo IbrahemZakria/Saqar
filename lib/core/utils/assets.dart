@@ -2,11 +2,19 @@
 class Assets {
   Assets._();
   
+  static const String resourceImagesAya = "assets/images/aya.svg";
+
+  static const String resourceImagesBackgroundQuran = "assets/images/Background_quran.png";
+
+  static const String resourceImagesHadethBackground = "assets/images/Hadeth_background.png";
+
   static const String resourceImagesImgLeftCorner = "assets/images/img_left_corner.svg";
 
   static const String resourceImagesImgRightCorner = "assets/images/img_right_corner.svg";
 
   static const String resourceImagesIslamiLogo = "assets/images/islami_logo.svg";
+
+  static const String resourceImagesMoshaf = "assets/images/moshaf.png";
 
   static const String resourceImagesMosque = "assets/images/Mosque.png";
 
@@ -17,6 +25,12 @@ class Assets {
   static const String resourceImagesOnboarding3 = "assets/images/onboarding3.png";
 
   static const String resourceImagesOnboarding4 = "assets/images/onboarding4.png";
+
+  static const String resourceImagesQuranIcon = "assets/images/quran_icon.svg";
+
+  static const String resourceImagesRadioBackground = "assets/images/Radio_background.png";
+
+  static const String resourceImagesSebhaBackground = "assets/images/Sebha_background.png";
 
   static const String resourceImagesSelectedHadesIcon = "assets/images/selected_hades_icon.svg";
 
@@ -29,6 +43,8 @@ class Assets {
   static const String resourceImagesSelectedTimeIcon = "assets/images/selected_time_icon.svg";
 
   static const String resourceImagesSplashScreen = "assets/images/Splash_Screen.png";
+
+  static const String resourceImagesTimeBackground = "assets/images/Time_background.png";
 
   static const String resourceImagesUnSelectedAhadesIcon = "assets/images/un_selected_ahades_icon.svg";
 

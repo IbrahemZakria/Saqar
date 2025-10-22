@@ -13,7 +13,7 @@ class SelectedItem extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Color.fromARGB(71, 32, 32, 32),
+        color: AppColors.kopacityBlackColor,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -21,7 +21,7 @@ class SelectedItem extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 15,
-            backgroundColor: Color.fromARGB(71, 32, 32, 32),
+            backgroundColor: AppColors.kopacityBlackColor,
             child: FittedBox(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),

@@ -11,6 +11,7 @@ class SaqarApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: router,
+      locale: Locale("en"),
 
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
