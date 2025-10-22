@@ -6,6 +6,7 @@ import 'package:saqar/features/on_boarding/presentation/pages/main_on_boarding.d
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+  static const String routeName = "/";
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();

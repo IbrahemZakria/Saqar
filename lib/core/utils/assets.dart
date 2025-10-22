@@ -8,9 +8,9 @@ class Assets {
 
   static const String resourceImagesHadethBackground = "assets/images/Hadeth_background.png";
 
-  static const String resourceImagesImgLeftCorner = "assets/images/img_left_corner.svg";
+  static const String resourceImagesImgLeftCorner = "assets/images/img_left_corner.png";
 
-  static const String resourceImagesImgRightCorner = "assets/images/img_right_corner.svg";
+  static const String resourceImagesImgRightCorner = "assets/images/img_right_corner.png";
 
   static const String resourceImagesIslamiLogo = "assets/images/islami_logo.svg";
 

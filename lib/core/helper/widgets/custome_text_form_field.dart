@@ -67,7 +67,7 @@ class CustomeTextFormField extends StatelessWidget {
         hintText: hintText ?? '',
         hintStyle: AppTextSyles.textStyle16se(
           context,
-        ).copyWith(color: Colors.white),
+        ).copyWith(color: Colors.white.withAlpha(120)),
         enabledBorder: buildborder(),
 
         errorBorder: buildborder(),

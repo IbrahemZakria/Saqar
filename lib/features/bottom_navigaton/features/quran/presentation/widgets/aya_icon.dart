@@ -9,19 +9,18 @@ class AyaIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          SvgPicture.asset(Assets.resourceImagesAya, width: 40),
-          Text(
-            ayaNumper.toString(),
-            textAlign: TextAlign.center,
-            style: AppTextSyles.textStyle20b(context),
-          ),
-        ],
-      ),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        SvgPicture.asset(Assets.resourceImagesAya, width: 40),
+        Text(
+          ayaNumper.toString(),
+          textAlign: TextAlign.center,
+          style: ayaNumper < 10
+              ? AppTextSyles.textStyle20b(context)
+              : AppTextSyles.textStyle20b(context).copyWith(fontSize: 10),
+        ),
+      ],
     );
   }
 }
