@@ -9,7 +9,7 @@ class AppTextSyles {
     color: AppColors.kprimarycolor,
   );
   static TextStyle textStyle16se(BuildContext context) => TextStyle(
-    fontWeight: FontWeight.w500,
+    fontWeight: FontWeight.w600,
     fontSize: getResponsiveFontSize(context, fontSize: 16),
     color: AppColors.kprimarycolor,
   );

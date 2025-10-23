@@ -4,7 +4,7 @@ import 'package:saqar/core/helper/thems/app_colors.dart';
 import 'package:saqar/core/helper/thems/app_text_syles.dart';
 import 'package:saqar/core/utils/assets.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/domain/entities/sura_entity.dart';
-import 'package:saqar/features/bottom_navigaton/features/quran/presentation/cubit/quran_cubit.dart';
+import 'package:saqar/features/bottom_navigaton/features/quran/presentation/cubit/quran_cubit/quran_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/presentation/widgets/aya_icon.dart';
 

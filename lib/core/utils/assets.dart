@@ -6,6 +6,10 @@ class Assets {
 
   static const String resourceImagesBackgroundQuran = "assets/images/Background_quran.png";
 
+  static const String resourceImagesBlackLeftCorner = "assets/images/black_left_corner.png";
+
+  static const String resourceImagesBlackRightCorner = "assets/images/black_right_corner.png";
+
   static const String resourceImagesHadethBackground = "assets/images/Hadeth_background.png";
 
   static const String resourceImagesImgLeftCorner = "assets/images/img_left_corner.png";
@@ -17,6 +21,8 @@ class Assets {
   static const String resourceImagesMoshaf = "assets/images/moshaf.png";
 
   static const String resourceImagesMosque = "assets/images/Mosque.png";
+
+  static const String resourceImagesMosque02 = "assets/images/Mosque-02.png";
 
   static const String resourceImagesOnboarding1 = "assets/images/onboarding1.png";
 
