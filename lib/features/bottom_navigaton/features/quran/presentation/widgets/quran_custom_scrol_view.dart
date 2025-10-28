@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:saqar/core/helper/thems/app_text_syles.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/domain/entities/sura_entity.dart';
-import 'package:saqar/features/bottom_navigaton/features/quran/presentation/cubit/quran_player/quran_player_cubit.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/presentation/widgets/aya_widget.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/presentation/widgets/most_recently_item.dart';
 
@@ -55,10 +53,7 @@ class QuranCustomScrolView extends StatelessWidget {
           SliverList.separated(
             itemCount: suras.length,
             itemBuilder: (context, index) {
-              return BlocProvider(
-                create: (context) => QuranPlayerCubit(),
-                child: AyaWidget(suraEntity: suras[index]),
-              );
+              return AyaWidget(suraEntity: suras[index]);
             },
             separatorBuilder: (context, index) {
               return Divider(endIndent: 45, indent: 45, thickness: 1);

@@ -38,6 +38,8 @@ class Assets {
 
   static const String resourceImagesSebhaBackground = "assets/images/Sebha_background.png";
 
+  static const String resourceImagesSebhaBody = "assets/images/SebhaBody.png";
+
   static const String resourceImagesSelectedHadesIcon = "assets/images/selected_hades_icon.svg";
 
   static const String resourceImagesSelectedQuranIcon = "assets/images/selected_quran_icon.svg";
@@ -47,6 +49,10 @@ class Assets {
   static const String resourceImagesSelectedSephaIcon = "assets/images/selected_sepha_icon.svg";
 
   static const String resourceImagesSelectedTimeIcon = "assets/images/selected_time_icon.svg";
+
+  static const String resourceImagesSephaHeader = "assets/images/sepha_header.png";
+
+  static const String resourceImagesSoundRun = "assets/images/sound_run.png";
 
   static const String resourceImagesSplashScreen = "assets/images/Splash_Screen.png";
 

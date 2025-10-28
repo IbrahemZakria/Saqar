@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:saqar/core/helper/thems/app_colors.dart';
 import 'package:saqar/core/helper/thems/app_text_syles.dart';
 import 'package:saqar/core/utils/assets.dart';
@@ -62,7 +61,7 @@ class SurahView extends StatelessWidget {
                                 children: [
                                   for (int i = 0; i < verses.length; i++) ...[
                                     // هنا نشيل المسافات من أول وآخر الآية
-                                    TextSpan(text: verses[i].trim() + ' '),
+                                    TextSpan(text: '${verses[i].trim()} '),
                                     WidgetSpan(
                                       alignment: PlaceholderAlignment.middle,
                                       child: AyaIcon(ayaNumper: i + 1),

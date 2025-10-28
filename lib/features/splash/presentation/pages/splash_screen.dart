@@ -30,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen>
     _moveAnimation = Tween<double>(
       begin: 0,
       end:
+          // ignore: deprecated_member_use
           -MediaQueryData.fromView(WidgetsBinding.instance.window).size.height *
           0.25,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));

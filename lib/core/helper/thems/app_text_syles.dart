@@ -33,6 +33,11 @@ class AppTextSyles {
     fontSize: getResponsiveFontSize(context, fontSize: 14),
     color: Colors.white,
   );
+  static TextStyle textStyle36b(BuildContext context) => TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: getResponsiveFontSize(context, fontSize: 36),
+    color: Colors.white,
+  );
 }
 
 /// دالة حساب حجم الخط Responsive

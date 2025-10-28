@@ -15,32 +15,32 @@ class BottomAppBarEntity {
   static List<BottomAppBarEntity> getBottomAppBarItems(BuildContext context) {
     final items = [
       BottomAppBarEntity(
-        "Quran",
+        "القرءان",
         Assets.resourceImagesSelectedQuranIcon,
         Assets.resourceImagesUnSelectedQuranIcon,
         0,
       ),
       BottomAppBarEntity(
-        "Hades",
+        "الاحاديث",
         Assets.resourceImagesSelectedHadesIcon,
         Assets.resourceImagesUnSelectedAhadesIcon,
         1,
       ),
       BottomAppBarEntity(
-        "Taspeh",
+        "سبح",
         Assets.resourceImagesSelectedSephaIcon,
         Assets.resourceImagesUnSelectedSephaIcon,
         2,
       ),
       BottomAppBarEntity(
-        "Radio",
+        "استمع",
         Assets.resourceImagesSelectedRadioIcon,
 
         Assets.resourceImagesUnSelectedRadioIcon,
         3,
       ),
       BottomAppBarEntity(
-        "Time",
+        "الاعدادات",
         Assets.resourceImagesSelectedTimeIcon,
         Assets.resourceImagesUnSelectedTimeIcon,
         4,

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:saqar/features/bottom_navigaton/features/ahades/presentation/pages/ahades_page.dart';
 import 'package:saqar/features/bottom_navigaton/features/main_bottom_navigation/presentation/pages/main_home_page.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/domain/entities/sura_entity.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/presentation/pages/quran_page.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/presentation/widgets/surah_view.dart';
+import 'package:saqar/features/bottom_navigaton/features/sound/data/repos/radio_repository.dart';
+import 'package:saqar/features/bottom_navigaton/features/sound/data/repos/reciters_repo_impl.dart';
+import 'package:saqar/features/bottom_navigaton/features/sound/presentation/cubit/radio/radio_cubit.dart';
+import 'package:saqar/features/bottom_navigaton/features/sound/presentation/cubit/redirect/reciter_cubit.dart';
+import 'package:saqar/features/bottom_navigaton/features/sound/presentation/pages/sound_page.dart';
+import 'package:saqar/features/bottom_navigaton/features/sepha/presentation/pages/taspeh_page.dart';
 import 'package:saqar/features/on_boarding/presentation/pages/main_on_boarding.dart';
 import 'package:saqar/features/splash/presentation/pages/splash_screen.dart';
 
@@ -58,10 +65,9 @@ final GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/tasbeeh',
+              path: TaspehPage.routeName,
               name: 'tasbeeh',
-              builder: (context, state) =>
-                  const Scaffold(body: Center(child: Text('Tasbeeh Page'))),
+              builder: (context, state) => const TaspehPage(),
             ),
           ],
         ),
@@ -69,10 +75,22 @@ final GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/settings',
-              name: 'settings',
-              builder: (context, state) =>
-                  const Scaffold(body: Center(child: Text('Settings Page'))),
+              path: '/sound',
+              builder: (context, state) {
+                return MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (_) =>
+                          RadioCubit(RadioRepository())..fetchRadios(),
+                    ),
+                    BlocProvider(
+                      create: (_) =>
+                          ReciterCubit(RecitersRepoImpl())..fetchReciters(),
+                    ),
+                  ],
+                  child: const SoundPage(),
+                );
+              },
             ),
           ],
         ),
