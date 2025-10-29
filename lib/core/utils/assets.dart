@@ -2,6 +2,10 @@
 class Assets {
   Assets._();
   
+  static const String resourceImagesAdhkarEvening = "assets/images/adhkar_evening.png";
+
+  static const String resourceImagesAdhkarMorning = "assets/images/adhkar_morning.png";
+
   static const String resourceImagesAya = "assets/images/aya.svg";
 
   static const String resourceImagesBackgroundQuran = "assets/images/Background_quran.png";

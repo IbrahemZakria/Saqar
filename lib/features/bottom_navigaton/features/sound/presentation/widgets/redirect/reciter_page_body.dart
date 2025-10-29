@@ -5,6 +5,7 @@ import 'package:saqar/core/helper/thems/app_text_syles.dart';
 import 'package:saqar/features/bottom_navigaton/features/sound/presentation/cubit/redirect/reciter_cubit.dart';
 import 'package:saqar/features/bottom_navigaton/features/sound/presentation/cubit/redirect/reciter_state.dart';
 import 'package:saqar/features/bottom_navigaton/features/sound/presentation/widgets/redirect/surah_list_page.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ReciterPageBody extends StatelessWidget {
   const ReciterPageBody({super.key});
@@ -54,17 +55,14 @@ class ReciterPageBody extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        reciter.name,
-                        style: AppTextSyles.textStyle20b(
-                          context,
-                        ).copyWith(color: Colors.white70),
-                      ),
-                      Text(
-                        " : القارئ الشيخ",
-                        style: AppTextSyles.textStyle20b(
-                          context,
-                        ).copyWith(color: Colors.white70),
+                      Flexible(
+                        child: Text(
+                          "القارئ الشيخ : ${reciter.name}",
+                          style: AppTextSyles.textStyle20b(
+                            context,
+                          ).copyWith(color: Colors.white70),
+                          maxLines: 1,
+                        ),
                       ),
                     ],
                   ),

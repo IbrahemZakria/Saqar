@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:saqar/features/bottom_navigaton/features/ahades/presentation/pages/ahades_page.dart';
@@ -6,6 +5,7 @@ import 'package:saqar/features/bottom_navigaton/features/main_bottom_navigation/
 import 'package:saqar/features/bottom_navigaton/features/quran/domain/entities/sura_entity.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/presentation/pages/quran_page.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/presentation/widgets/surah_view.dart';
+import 'package:saqar/features/bottom_navigaton/features/setting/presentation/pages/setting_page.dart';
 import 'package:saqar/features/bottom_navigaton/features/sound/data/repos/radio_repository.dart';
 import 'package:saqar/features/bottom_navigaton/features/sound/data/repos/reciters_repo_impl.dart';
 import 'package:saqar/features/bottom_navigaton/features/sound/presentation/cubit/radio/radio_cubit.dart';
@@ -98,10 +98,9 @@ final GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/profile',
-              name: 'profile',
-              builder: (context, state) =>
-                  const Scaffold(body: Center(child: Text('Profile Page'))),
+              path: SettingPage.routeName,
+              name: 'Setting',
+              builder: (context, state) => SettingPage(),
             ),
           ],
         ),
