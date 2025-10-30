@@ -38,8 +38,9 @@ class PrayWidget extends StatelessWidget {
       if (now.isBefore(e.value)) return e;
     }
 
-    if (tomorrowPrayerTimes != null)
+    if (tomorrowPrayerTimes != null) {
       return MapEntry('Fajr', tomorrowPrayerTimes!.fajr);
+    }
     return null;
   }
 
@@ -139,11 +140,11 @@ class PrayWidget extends StatelessWidget {
                 ' - الصلاه القادمه',
                 style: TextStyle(fontSize: 14, color: Colors.grey[700]),
               ),
+              SizedBox(height: 16),
             ],
           ),
           SizedBox(height: 16),
         ],
-        // بص انا عايز الاذكار هنا
       ),
     );
   }

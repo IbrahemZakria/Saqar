@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
+import 'package:saqar/core/helper/functions/splach_navigate.dart';
 import 'package:saqar/core/utils/assets.dart';
-import 'package:saqar/features/on_boarding/presentation/pages/main_on_boarding.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,7 +29,6 @@ class _SplashScreenState extends State<SplashScreen>
     _moveAnimation = Tween<double>(
       begin: 0,
       end:
-          // ignore: deprecated_member_use
           -MediaQueryData.fromView(WidgetsBinding.instance.window).size.height *
           0.25,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
@@ -42,8 +40,13 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    _controller.forward();
-    _controller.forward().then((value) => context.go(MainOnBoarding.routeName));
+    // بعد ما تبني الشاشة، نفذ التنقل
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SplashNavigator.startAnimationAndNavigate(
+        context: context,
+        controller: _controller,
+      );
+    });
   }
 
   @override
@@ -60,10 +63,8 @@ class _SplashScreenState extends State<SplashScreen>
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // ✅ الخلفية SVG
           Image.asset(Assets.resourceImagesSplashScreen, fit: BoxFit.cover),
 
-          // ✅ اللوجو المتحرك
           AnimatedBuilder(
             animation: _controller,
             builder: (context, child) {
@@ -82,6 +83,7 @@ class _SplashScreenState extends State<SplashScreen>
               );
             },
           ),
+
           Positioned(
             right: 32,
             left: 32,

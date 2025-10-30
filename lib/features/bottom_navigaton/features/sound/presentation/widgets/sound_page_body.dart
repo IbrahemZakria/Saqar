@@ -79,6 +79,7 @@ class SoundPageBody extends StatelessWidget {
         curve: Curves.easeInOut,
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
         decoration: BoxDecoration(
+          border: Border.all(color: AppColors.kprimarycolor),
           color: isSelected
               ? AppColors.kprimarycolor
               : AppColors.kopacityBlackColor,

@@ -23,8 +23,8 @@ class DotedIndicator extends StatelessWidget {
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             margin: const EdgeInsets.symmetric(horizontal: 4),
-            width: currentPage == index ? 20 : 16,
-            height: currentPage == index ? 20 : 16,
+            width: currentPage == index ? 8 : 5,
+            height: currentPage == index ? 8 : 5,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: currentPage == index

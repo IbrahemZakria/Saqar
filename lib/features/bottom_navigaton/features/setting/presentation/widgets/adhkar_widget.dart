@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:saqar/features/bottom_navigaton/features/setting/presentation/cubit/adhkar/adhkar_cubit.dart';
 import 'package:saqar/features/bottom_navigaton/features/setting/presentation/widgets/azkar_item_screen.dart';
+import 'package:saqar/features/bottom_navigaton/features/setting/presentation/widgets/azkar_loading.dart';
 import 'package:saqar/features/bottom_navigaton/features/setting/presentation/widgets/category_card.dart';
 
 class AdhkarWidget extends StatefulWidget {
@@ -23,7 +24,7 @@ class _AdhkarWidgetState extends State<AdhkarWidget> {
     return BlocBuilder<AdhkarCubit, AdhkarState>(
       builder: (context, state) {
         if (state is AdhkarLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const AzkarLoading();
         } else if (state is AdhkarLoaded) {
           return GridView.builder(
             shrinkWrap: true,

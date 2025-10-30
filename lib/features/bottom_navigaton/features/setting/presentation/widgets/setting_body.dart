@@ -7,6 +7,8 @@ import 'package:saqar/features/bottom_navigaton/features/setting/presentation/cu
 import 'package:saqar/features/bottom_navigaton/features/setting/presentation/cubit/pray/pray_state.dart';
 import 'package:saqar/features/bottom_navigaton/features/setting/presentation/widgets/adhkar_widget.dart';
 import 'package:saqar/features/bottom_navigaton/features/setting/presentation/widgets/pray_widget.dart';
+import 'package:saqar/features/bottom_navigaton/features/setting/presentation/widgets/pray_widget_loading.dart';
+import 'package:saqar/features/bottom_navigaton/features/sound/presentation/widgets/sound_error.dart';
 
 class SettingBody extends StatefulWidget {
   const SettingBody({super.key});
@@ -36,18 +38,18 @@ class _SettingBodyState extends State<SettingBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PrayerCubit, PrayerState>(
-      builder: (context, state) {
-        if (state is PrayerLoading) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (state is PrayerError) {
-          return Center(child: Text(state.message));
-        }
-        if (state is PrayerLoaded) {
-          return RefreshIndicator(
-            onRefresh: () => context.read<PrayerCubit>().fetchPrayerTimes(),
-            child: CustomScrollView(
+    return RefreshIndicator(
+      onRefresh: () => context.read<PrayerCubit>().fetchPrayerTimes(),
+      child: BlocBuilder<PrayerCubit, PrayerState>(
+        builder: (context, state) {
+          if (state is PrayerLoading) {
+            return PrayWidgetLoading();
+          }
+          if (state is PrayerError) {
+            return SoundError();
+          }
+          if (state is PrayerLoaded) {
+            return CustomScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 SliverToBoxAdapter(
@@ -71,11 +73,11 @@ class _SettingBodyState extends State<SettingBody> {
                   ),
                 ),
               ],
-            ),
-          );
-        }
-        return const SizedBox.shrink();
-      },
+            );
+          }
+          return const SizedBox.shrink();
+        },
+      ),
     );
   }
 }

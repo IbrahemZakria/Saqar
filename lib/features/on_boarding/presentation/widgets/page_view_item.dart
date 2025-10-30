@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saqar/core/helper/thems/app_colors.dart';
 import 'package:saqar/core/helper/thems/app_text_syles.dart';
 import 'package:saqar/core/utils/assets.dart';
 import 'package:saqar/features/on_boarding/presentation/data/models/onboarding_model.dart';
@@ -90,10 +91,16 @@ class _PageViewItemState extends State<PageViewItem>
         builder: (context, child) {
           return Opacity(
             opacity: animation.value,
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: AppTextSyles.textStyle24re(context),
+            child: Column(
+              children: [
+                Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: AppTextSyles.textStyle20b(
+                    context,
+                  ).copyWith(color: AppColors.kprimarycolor),
+                ),
+              ],
             ),
           );
         },
@@ -150,7 +157,9 @@ class _PageViewItemState extends State<PageViewItem>
           _animatedText(
             _textFadeAnimation2,
             widget.onboardingModel.suTitel,
-            screenHeight * 0.76,
+            widget.onboardingModel.titel != null
+                ? screenHeight * 0.76
+                : screenHeight * 0.6,
           ),
         ],
       ),

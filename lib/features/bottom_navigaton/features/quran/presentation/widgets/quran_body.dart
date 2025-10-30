@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:saqar/core/helper/quran.dart';
+import 'package:saqar/core/utils/quran.dart';
 import 'package:saqar/core/helper/thems/app_text_syles.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/presentation/cubit/quran_cubit/quran_cubit.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/presentation/widgets/quran_custom_scrol_view.dart';

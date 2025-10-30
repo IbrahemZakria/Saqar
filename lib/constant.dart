@@ -1,3 +1,3 @@
 class Constant {
-  static String appName = "Saqar";
+  static String appName = "الأُترُجَّةِ";
 }

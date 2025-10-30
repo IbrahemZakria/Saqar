@@ -12,7 +12,12 @@ class AzkarItemsScreen extends StatelessWidget {
     final azkar = category.azkar ?? [];
 
     return Scaffold(
-      appBar: AppBar(title: Text(category.title)),
+      appBar: AppBar(
+        centerTitle: true,
+        iconTheme: IconThemeData(color: AppColors.kprimarycolor),
+        backgroundColor: Colors.transparent,
+        title: Text(category.title, style: AppTextSyles.textStyle24re(context)),
+      ),
       body: azkar.isEmpty
           ? const Center(child: Text('لا يوجد اذكار'))
           : ListView.builder(

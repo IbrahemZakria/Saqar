@@ -22,32 +22,36 @@ class _MainOnBoardingState extends State<MainOnBoarding> {
   final List<OnboardingModel> models = [
     OnboardingModel(
       img: Assets.resourceImagesWelcome,
-      suTitel: "Welcome to Saqar App",
+      suTitel:
+          "قال ﷺ: «مثلُ المؤمنِ الذي يقرأُ القرآنَ مثلُ الأُترُجَّةِ، طعمُها طيِّبٌ وريحُها طيِّبٌ\n"
+          "ومثلُ المؤمنِ الذي لا يقرأُ القرآنَ مثلُ التمرةِ، طعمُها طيِّبٌ ولا ريحَ لها\n"
+          "ومثلُ المنافقِ الذي يقرأُ القرآنَ مثلُ الرَّيحانةِ، ريحُها طيِّبٌ وطعمُها مُرٌّ\n"
+          "ومثلُ المنافقِ الذي لا يقرأُ القرآنَ مثلُ الحنظلةِ، طعمُها مُرٌّ ولا ريحَ لها.»",
       index: 0,
     ),
     OnboardingModel(
       img: Assets.resourceImagesOnboarding1,
-      titel: "Welcome to Saqar App",
-      suTitel: 'We Are Very Excited To Have You In Our Community',
+      titel: "الأُترُجَّةِ",
+      suTitel:
+          'باسم الله نرحب بك في مجتمعنا، ونسأل الله أن يكون هذا التطبيق نورًا في حياتك اليومية🌙',
       index: 1,
     ),
     OnboardingModel(
       img: Assets.resourceImagesOnboarding2,
-      titel: "Reading the Quran",
-      suTitel: 'Read, and your Lord is the Most Generous',
+      titel: "قراءة القرآن",
+      suTitel: 'اقرأ، وربك هو الأكرم🌙📖',
       index: 2,
     ),
     OnboardingModel(
       img: Assets.resourceImagesOnboarding3,
-      titel: "Bearish",
-      suTitel: 'Praise the name of your Lord, the Most High',
+      titel: "سبح",
+      suTitel: 'سبح اسم ربك الأعلى 🌙',
       index: 3,
     ),
     OnboardingModel(
       img: Assets.resourceImagesOnboarding4,
-      titel: "Holy Quran Radio",
-      suTitel:
-          'You can listen to the Holy Quran Radio through the application for free and easily',
+      titel: "راديو القرآن الكريم",
+      suTitel: 'استمتع بالاستماع إلى القرآن الكريم في أي وقت، مجانًا وبسهولة✨',
       index: 4,
     ),
   ];
@@ -116,7 +120,6 @@ class _MainOnBoardingState extends State<MainOnBoarding> {
                       TextButton(
                         onPressed: () {
                           if (currentPage == models.length - 1) {
-                            context.go(QuranPage.routeName);
                           } else {
                             pageController.nextPage(
                               duration: const Duration(milliseconds: 300),

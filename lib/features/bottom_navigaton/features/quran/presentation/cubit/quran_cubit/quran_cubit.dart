@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:saqar/core/helper/quran.dart';
+import 'package:saqar/core/utils/quran.dart';
 import 'package:saqar/features/bottom_navigaton/features/quran/domain/entities/sura_entity.dart';
 
 part 'quran_state.dart';
