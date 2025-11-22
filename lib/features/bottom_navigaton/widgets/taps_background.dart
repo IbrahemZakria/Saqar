@@ -30,7 +30,8 @@ class TapsBackground extends StatelessWidget {
               top: 8,
               child: Visibility(
                 visible: notificationVisale,
-                child: NotificationIcon(),
+                child: Text("data"),
+                // NotificationIcon(),
               ),
             ),
             Positioned(

@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:quran/quran.dart' as quran;
-import 'package:atrega/core/helper/quran.dart';
+import 'package:atrega/core/utils/quran.dart';
 import 'package:atrega/features/bottom_navigaton/features/quran/domain/entities/sura_entity.dart';
 import 'package:atrega/features/bottom_navigaton/features/quran/presentation/cubit/quran_cubit/quran_state.dart';
 

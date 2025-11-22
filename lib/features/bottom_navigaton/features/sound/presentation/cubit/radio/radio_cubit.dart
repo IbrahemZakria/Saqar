@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:atrega/features/bottom_navigaton/features/sound/data/repos/radio_repository.dart';
+import 'package:atrega/features/bottom_navigaton/features/sound/data/repos/radio_repository_impel.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/domain/entities/radio_entity.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/presentation/cubit/radio/radio_state.dart';
 
 class RadioCubit
     extends Cubit<({RadioLoadState load, RadioPlayerState player})> {
-  final RadioRepository repository;
+  final RadioRepositoryImpel repository;
   final AudioPlayer _player = AudioPlayer();
 
   RadioCubit(this.repository)

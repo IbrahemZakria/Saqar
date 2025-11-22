@@ -1,6 +1,6 @@
 import 'package:atrega/atrega.dart';
 import 'package:atrega/bloc_observer.dart';
-import 'package:atrega/core/helper/functions/notification_service.dart';
+import 'package:atrega/core/helper/functions/notification_services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,13 +18,8 @@ Future<void> main() async {
     ),
   );
   Bloc.observer = MyBlocObserver();
-
-  if (!kIsWeb) {
-    tz.initializeTimeZones();
-
-    // تهيئة الإشعارات
-    await LocalNotificationService.initialize();
-  }
+  await NotificationServices().init();
+  tz.initializeTimeZones();
 
   runApp(Atrega());
 }

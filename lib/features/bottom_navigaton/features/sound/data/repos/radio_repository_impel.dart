@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/radio_model.dart';
 
-class RadioRepository {
+class RadioRepositoryImpel {
   Future<List<RadioModel>> fetchRadios() async {
     final url = Uri.parse('https://www.mp3quran.net/api/v3/radios?language=ar');
     final response = await http.get(url);

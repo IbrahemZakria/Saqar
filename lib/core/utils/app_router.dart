@@ -1,3 +1,4 @@
+import 'package:atrega/core/helper/functions/notification_services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:atrega/features/bottom_navigaton/features/ahades/presentation/pages/ahades_page.dart';
@@ -6,7 +7,7 @@ import 'package:atrega/features/bottom_navigaton/features/quran/domain/entities/
 import 'package:atrega/features/bottom_navigaton/features/quran/presentation/pages/quran_page.dart';
 import 'package:atrega/features/bottom_navigaton/features/quran/presentation/widgets/surah_view.dart';
 import 'package:atrega/features/bottom_navigaton/features/setting/presentation/pages/setting_page.dart';
-import 'package:atrega/features/bottom_navigaton/features/sound/data/repos/radio_repository.dart';
+import 'package:atrega/features/bottom_navigaton/features/sound/data/repos/radio_repository_impel.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/data/repos/reciters_repo_impl.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/presentation/cubit/radio/radio_cubit.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/presentation/cubit/redirect/reciter_cubit.dart';
@@ -16,6 +17,7 @@ import 'package:atrega/features/on_boarding/presentation/pages/main_on_boarding.
 import 'package:atrega/features/splash/presentation/pages/splash_screen.dart';
 
 final GoRouter router = GoRouter(
+  navigatorKey: NotificationServices.navigatorKey,
   initialLocation: SplashScreen.routeName,
   routes: [
     GoRoute(
@@ -81,7 +83,7 @@ final GoRouter router = GoRouter(
                   providers: [
                     BlocProvider(
                       create: (_) =>
-                          RadioCubit(RadioRepository())..fetchRadios(),
+                          RadioCubit(RadioRepositoryImpel())..fetchRadios(),
                     ),
                     BlocProvider(
                       create: (_) =>
