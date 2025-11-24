@@ -1,5 +1,5 @@
+import 'package:atrega/features/bottom_navigaton/features/setting/domain/repositories/adhkar_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:atrega/features/bottom_navigaton/features/setting/data/repositories/adhkar_repository_impel.dart';
 import 'package:atrega/features/bottom_navigaton/features/setting/domain/entities/adhkar_category_entity.dart';
 part 'adhkar_state.dart';
 

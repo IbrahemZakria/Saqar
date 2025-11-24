@@ -2,15 +2,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/data/repos/radio_repository_impel.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/domain/entities/radio_entity.dart';
+import 'package:atrega/features/bottom_navigaton/features/sound/domain/usecases/load_radios.dart';
+import 'package:atrega/core/usecase/usecase.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/presentation/cubit/radio/radio_state.dart';
 
 class RadioCubit
     extends Cubit<({RadioLoadState load, RadioPlayerState player})> {
-  final RadioRepositoryImpel repository;
+  final LoadRadios _loadRadios;
   final AudioPlayer _player = AudioPlayer();
 
-  RadioCubit(this.repository)
-    : super((load: RadioInitial(), player: const RadioPlayerState())) {
+  RadioCubit({LoadRadios? loadRadios, RadioRepositoryImpel? repository})
+    : _loadRadios =
+          loadRadios ?? LoadRadios(repository ?? RadioRepositoryImpel()),
+      super((load: RadioInitial(), player: const RadioPlayerState())) {
     _listenToAudio();
   }
 
@@ -18,7 +22,7 @@ class RadioCubit
   Future<void> fetchRadios() async {
     emit((load: RadioLoading(), player: state.player));
     try {
-      final List<RadioEntity> radios = await repository.fetchRadios();
+      final List<RadioEntity> radios = await _loadRadios(NoParams());
       emit((load: RadioLoaded(radios), player: state.player));
     } catch (e) {
       emit((load: RadioError(e.toString()), player: state.player));

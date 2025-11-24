@@ -1,12 +1,14 @@
+import 'package:atrega/features/bottom_navigaton/features/setting/domain/repositories/adhkar_repository.dart';
 import 'package:muslim_data_flutter/muslim_data_flutter.dart';
 import '../../domain/entities/adhkar_entity.dart';
 import '../../domain/entities/adhkar_category_entity.dart';
 import 'package:atrega/core/utils/assets.dart';
 
-class AdhkarRepository {
+class AdhkarRepositoryImpel extends AdhkarRepository {
   final _repo = MuslimRepository();
 
   // جلب الفئات المحلية
+  @override
   Future<List<AdhkarCategoryEntity>> getLocalCategories() async {
     await Future.delayed(const Duration(milliseconds: 300));
     return [
@@ -25,6 +27,7 @@ class AdhkarRepository {
   }
 
   // جلب الأذكار من MuslimRepository
+  @override
   Future<List<AdhkarEntity>> getAzkarByCategory(String categoryTitle) async {
     const lang = Language.ar;
 
@@ -53,6 +56,7 @@ class AdhkarRepository {
   }
 
   // جلب الفئات مع الأذكار مباشرة
+  @override
   Future<List<AdhkarCategoryEntity>> getCategoriesWithAzkar() async {
     final categories = await getLocalCategories();
     List<AdhkarCategoryEntity> result = [];

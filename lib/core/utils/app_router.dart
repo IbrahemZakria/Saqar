@@ -17,7 +17,7 @@ import 'package:atrega/features/on_boarding/presentation/pages/main_on_boarding.
 import 'package:atrega/features/splash/presentation/pages/splash_screen.dart';
 
 final GoRouter router = GoRouter(
-  navigatorKey: NotificationServices.navigatorKey,
+  // navigatorKey: NotificationServices.navigatorKey,
   initialLocation: SplashScreen.routeName,
   routes: [
     GoRoute(
@@ -83,11 +83,13 @@ final GoRouter router = GoRouter(
                   providers: [
                     BlocProvider(
                       create: (_) =>
-                          RadioCubit(RadioRepositoryImpel())..fetchRadios(),
+                          RadioCubit(repository: RadioRepositoryImpel())
+                            ..fetchRadios(),
                     ),
                     BlocProvider(
                       create: (_) =>
-                          ReciterCubit(RecitersRepoImpl())..fetchReciters(),
+                          ReciterCubit(repo: RecitersRepoImpl())
+                            ..fetchReciters(),
                     ),
                   ],
                   child: const SoundPage(),

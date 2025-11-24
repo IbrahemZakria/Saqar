@@ -123,7 +123,7 @@ flutter_assets:
 flutter_intl:
   enabled: true
 
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/images/adhkar_evening.png"

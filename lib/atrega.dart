@@ -1,5 +1,11 @@
 import 'package:atrega/core/utils/app_router.dart';
+import 'package:atrega/features/bottom_navigaton/features/setting/data/repositories/notification_repository_impl.dart';
+import 'package:atrega/features/bottom_navigaton/features/setting/presentation/cubit/pray/pray_cubit.dart';
+import 'package:atrega/features/bottom_navigaton/features/setting/presentation/cubit/notification/notification_cubit.dart';
+import 'package:atrega/features/bottom_navigaton/features/setting/data/repositories/notification_repository_impl.dart'
+    as notif_impl;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'generated/l10n.dart';
@@ -7,21 +13,27 @@ import 'generated/l10n.dart';
 class Atrega extends StatelessWidget {
   const Atrega({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // context.read<PrayerCubit>().fetchPrayerTimesAndScheduleNotifications();
-    });
-
     return MaterialApp.router(
       builder: (BuildContext context, Widget? child) {
-        return SafeArea(
-          top: true,
-          left: false,
-          right: false,
-          bottom: true,
-          child: child ?? const SizedBox.shrink(),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => PrayerCubit(NotificationRepositoryImpl()),
+            ),
+            BlocProvider(
+              create: (context) =>
+                  NotificationCubit(notif_impl.NotificationRepositoryImpl()),
+            ),
+          ],
+          child: SafeArea(
+            top: true,
+            left: false,
+            right: false,
+            bottom: true,
+            child: child ?? const SizedBox.shrink(),
+          ),
         );
       },
       routerConfig: router,

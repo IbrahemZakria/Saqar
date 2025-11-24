@@ -1,19 +1,23 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/data/repos/reciters_repo_impl.dart';
+import 'package:atrega/features/bottom_navigaton/features/sound/domain/usecases/load_reciters.dart';
+import 'package:atrega/core/usecase/usecase.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/domain/entities/reciter_entity.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/presentation/cubit/redirect/reciter_state.dart';
 
 class ReciterCubit
     extends Cubit<({ReciterLoadState load, ReciterPlayerState player})> {
-  final RecitersRepoImpl _repo;
+  final LoadReciters _loadReciters;
+
   final AudioPlayer _player = AudioPlayer();
 
   Duration _duration = Duration.zero;
   Duration _position = Duration.zero;
 
-  ReciterCubit(this._repo)
-    : super((load: ReciterInitial(), player: ReciterPlayerInitial())) {
+  ReciterCubit({LoadReciters? loadReciters, RecitersRepoImpl? repo})
+    : _loadReciters = loadReciters ?? LoadReciters(repo ?? RecitersRepoImpl()),
+      super((load: ReciterInitial(), player: ReciterPlayerInitial())) {
     // ✅ لما السورة تخلص
     _player.onPlayerComplete.listen((_) {
       emit((load: state.load, player: ReciterPlayerStopped()));
@@ -54,7 +58,7 @@ class ReciterCubit
   Future<void> fetchReciters() async {
     emit((load: ReciterLoading(), player: state.player));
     try {
-      final reciters = await _repo.fetchReciters();
+      final reciters = await _loadReciters(NoParams());
       emit((load: ReciterLoaded(reciters), player: state.player));
     } catch (e) {
       emit((load: ReciterError(e.toString()), player: state.player));

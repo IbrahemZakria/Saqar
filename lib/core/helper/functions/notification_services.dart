@@ -1,7 +1,8 @@
-import 'package:flutter/widgets.dart';
+import 'dart:developer';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_timezone/timezone_info.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -16,27 +17,15 @@ class NotificationServices {
   NotificationServices._internal();
 
   // ------------------------------------
-  // -------- Private Static NavigatorKey --------
-  static final GlobalKey<NavigatorState> _navigatorKey =
-      GlobalKey<NavigatorState>();
-  static GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
   @pragma('vm:entry-point')
-  static void notificationTap(NotificationResponse notificationResponse) {
-    final int? id = notificationResponse.id;
-    switch (id) {
-      case 2 || 3:
-        final context = _navigatorKey.currentContext;
-        if (context != null) {
-          GoRouter.of(context).go("/settings");
-        }
-        break;
-      default:
-        break;
-    }
+  static void notificationTapBackground(
+    NotificationResponse notificationResponse,
+  ) {
+    print("Background notification tapped: ${notificationResponse.id}");
   }
 
   Future<void> init() async {
@@ -66,39 +55,34 @@ class NotificationServices {
 
     await flutterLocalNotificationsPlugin.initialize(
       settings,
-      onDidReceiveBackgroundNotificationResponse: notificationTap,
-      onDidReceiveNotificationResponse: notificationTap,
+      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+        print('Notification tapped: ${response.id}');
+      },
     );
   }
 
-  Future<void> scheduleDailyNotification({
-    required int id,
-    required String title,
-    required String body,
-    required String payload,
-    required int hour,
-    required int minute,
-  }) async {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-
-    tz.TZDateTime scheduledDate = tz.TZDateTime(
-      tz.local,
-      now.year,
-      now.month,
-      now.day,
-      hour,
-      minute,
-    );
-
-    if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
+  Future<bool> areNotificationsEnabled() async {
+    try {
+      final androidImpl = flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >();
+      final bool? enabled = await androidImpl?.areNotificationsEnabled();
+      if (enabled != null) return enabled;
+    } catch (e) {
+      print('Error checking Android notification permission: $e');
     }
-    const details = NotificationDetails(
+    return true;
+  }
+
+  NotificationDetails _defaultNotificationDetails() {
+    return const NotificationDetails(
       android: AndroidNotificationDetails(
         icon: '@mipmap/ic_launcher',
-        "basic_channel",
-        "Basic Notifications",
-        channelDescription: "Channel for basic notifications",
+        'scheduled_channel',
+        'Scheduled Notifications',
+        channelDescription: 'Scheduled notifications channel',
         importance: Importance.max,
         priority: Priority.high,
         playSound: true,
@@ -109,18 +93,14 @@ class NotificationServices {
         presentSound: true,
       ),
     );
+  }
 
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      payload: payload,
-
-      id,
-      title,
-      body,
-      scheduledDate,
-      details,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      matchDateTimeComponents: DateTimeComponents.time,
-    );
+  String getLocalTimeZoneName() {
+    try {
+      return tz.local.name;
+    } catch (_) {
+      return 'unknown';
+    }
   }
 
   Future<void> showBasicNotification({
@@ -191,6 +171,7 @@ class NotificationServices {
       print("Error: Scheduled date must be in the future");
       return;
     }
+    log("scedual");
 
     // 1. تأكد من تهيئة timezone أولاً
     tz.initializeTimeZones();

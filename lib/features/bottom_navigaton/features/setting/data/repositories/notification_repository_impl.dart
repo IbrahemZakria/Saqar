@@ -1,73 +1,98 @@
+import 'dart:developer';
+
+import 'package:adhan/adhan.dart' show PrayerTimes;
+import 'package:flutter/foundation.dart';
 import 'package:atrega/core/helper/functions/notification_services.dart';
+import 'package:atrega/features/bottom_navigaton/features/setting/data/functions/praytime.dart';
+import 'package:atrega/features/bottom_navigaton/features/setting/data/functions/azkar_notification_impl.dart';
 import 'package:atrega/features/bottom_navigaton/features/setting/domain/repositories/notification_repository.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:workmanager/workmanager.dart';
 
 class NotificationRepositoryImpl extends NotificationRepository {
   @override
-  void azkarNotification({required bool isActive}) {
-    // TODO: implement azkarNotification
-    List<String> azkarList = [
-      "سُبْحَانَ اللهِ",
-      "الْحَمْدُ لِلَّهِ",
-      "اللَّهُ أَكْبَرُ",
-      "لَا إِلَهَ إِلَّا اللهُ",
-      "سُبْحَانَ اللهِ وَبِحَمْدِهِ",
-      "سُبْحَانَ اللَّهِ الْعَظِيمِ",
-      "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
-      "سُبْحَانَ رَبِّيَ الْأَعْلَى",
-      "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
-      "اللَّهُ أَكْبَرُ كَبِيرًا",
-      "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
-      "سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَاللَّهُ أَكْبَرُ",
-      "رَبِّ لَا إِلٰهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ",
-      "رَبِّ إِنِّي مَسَّنِيَ الضُّرُّ وَأَنْتَ أَرْحَمُ الرَّاحِمِينَ",
-      "اللَّهُمَّ آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
-      "سُبْحَانَ اللهِ وَبِحَمْدِهِ، سُبْحَانَ رَبِّيَ الْعَظِيمِ",
-      "اللَّهُمَّ اهْدِنَا لِلصِّرَاطِ الْمُسْتَقِيمِ",
-    ];
-  }
-
-  @override
-  void eveningAzkarNotification({
-    required bool isActive,
-    required Duration time,
-  }) {
-    // TODO: implement eveningAzkarNotification
+  void azkarNotification({required bool isActive, required int timefreuency}) {
     if (isActive) {
-      NotificationServices().scheduleDailyNotification(
-        id: 2,
-        title: "أذكار الصباح",
-        body: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
-        hour: time.inHours,
-        minute: time.inMinutes,
-        payload: "أذكار الصباح",
+      Workmanager().registerPeriodicTask(
+        "azkar",
+        "azkar",
+        tag: "notification",
+        frequency: Duration(minutes: timefreuency),
       );
-    }
-    NotificationServices().cancelNotification(id: 2);
-  }
-
-  @override
-  void morningAzkarNotification({
-    required bool isActive,
-    required Duration time,
-  }) {
-    // TODO: implement morningAzkarNotification
-    if (isActive) {
-      NotificationServices().scheduleDailyNotification(
-        id: 3,
-        title: "أذكار المساء",
-        body: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
-        hour: time.inHours,
-        minute: time.inMinutes,
-        payload: "أذكار المساء",
-      );
+      debugPrint('Registered azkar_daily every $timefreuency minutes');
     } else {
-      NotificationServices().cancelNotification(id: 3);
+      Workmanager().cancelByUniqueName("azkar_daily");
+      debugPrint('Cancelled azkar_daily');
     }
   }
 
   @override
-  void prayNotification({required bool isActive}) {
-    // TODO: implement prayNotification
+  Future<void> eveningAzkarNotification({
+    required bool isActive,
+    required Duration time,
+  }) async {
+    if (isActive) {
+      Workmanager().registerPeriodicTask(
+        inputData: {
+          "id": 1,
+          "hour": time.inHours,
+          "minute": time.inMinutes % 60,
+        },
+
+        "eveningAzkarNotification",
+        "eveningAzkarNotification",
+        tag: "notification",
+        frequency: Duration(days: 1),
+      );
+      debugPrint('Registered eveningAzkarNotification every day');
+    } else {
+      Workmanager().cancelByUniqueName("eveningAzkarNotification");
+      debugPrint('Cancelled eveningAzkarNotification');
+    }
+  }
+
+  @override
+  Future<void> morningAzkarNotification({
+    required bool isActive,
+    required Duration time,
+  }) async {
+    if (isActive) {
+      Workmanager().registerPeriodicTask(
+        inputData: {
+          "id": 1,
+          "hour": time.inHours,
+          "minute": time.inMinutes % 60,
+        },
+        "morningAzkarNotification",
+        "morningAzkarNotification",
+        tag: "notification",
+        frequency: Duration(days: 1),
+      );
+      debugPrint('Registered morningAzkarNotification every day');
+    } else {
+      Workmanager().cancelByUniqueName("morningAzkarNotification");
+      debugPrint('Cancelled morningAzkarNotification');
+    }
+  }
+
+  @override
+  Future<void> prayNotification({required bool isActive}) async {
+    if (isActive) {
+      Workmanager().registerPeriodicTask(
+        "prayNotification",
+        "prayNotification",
+        tag: "notification",
+        frequency: Duration(days: 1),
+      );
+      debugPrint('Registered prayNotification every day');
+    } else {
+      Workmanager().cancelByUniqueName("prayNotification");
+      debugPrint('Cancelled prayNotification');
+    }
+  }
+
+  @override
+  Future<PrayerTimes> fetchPrayerTimes() async {
+    final today = await Praytime.fetchPrayerTimes();
+    return today;
   }
 }

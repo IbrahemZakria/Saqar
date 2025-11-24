@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:atrega/features/bottom_navigaton/features/sound/domain/entities/moshaf_entity.dart';
 import 'package:atrega/features/bottom_navigaton/features/sound/domain/entities/reciter_entity.dart';
+import 'package:atrega/features/bottom_navigaton/features/sound/domain/repositories/reciters_repository.dart';
 
-class RecitersRepoImpl {
+class RecitersRepoImpl implements RecitersRepositoryContract {
   static const String _baseUrl =
       'https://www.mp3quran.net/api/v3/reciters?language=ar';
 
   /// Fetch all reciters from the API
+  @override
   Future<List<ReciterEntity>> fetchReciters() async {
     try {
       final response = await http.get(Uri.parse(_baseUrl));

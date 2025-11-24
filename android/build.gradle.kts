@@ -1,3 +1,15 @@
+buildscript {
+    val kotlinVersion = "1.8.10" // أو أحدث إصدار
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:8.6.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+    }
+}
 allprojects {
     repositories {
         google()

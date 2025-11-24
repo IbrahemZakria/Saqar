@@ -56,13 +56,12 @@ class _SettingBodyState extends State<SettingBody> {
                   child: PrayWidget(
                     now: _now,
                     todayPrayerTimes: state.todayPrayerTimes,
-                    tomorrowPrayerTimes: state.tomorrowPrayerTimes,
                   ),
                 ),
                 SliverToBoxAdapter(
                   child: BlocProvider(
                     create: (_) =>
-                        AdhkarCubit(AdhkarRepository())
+                        AdhkarCubit(AdhkarRepositoryImpel())
                           ..loadCategoriesWithAzkar(),
                     child: const AdhkarWidget(),
                   ),
