@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:workmanager/workmanager.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,17 +16,9 @@ Future<void> main() async {
     ),
   );
   Bloc.observer = MyBlocObserver();
-  await Future.wait([
-    NotificationServices().init(),
-    WorkManagerService().init(),
-  ]);
-  await Workmanager().registerOneOffTask(
-    "test",
-    "morningAzkarNotification",
-    inputData: {"hour": 7, "minute": 18, "id": 999},
-  );
 
-  tz.initializeTimeZones();
+  await Future.wait([NotificationServices().init()]);
+  WorkManagerService().init();
 
   runApp(Atrega());
 }

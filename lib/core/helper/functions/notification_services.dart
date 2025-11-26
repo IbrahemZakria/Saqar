@@ -1,8 +1,8 @@
-import 'dart:developer';
-
+import 'dart:developer' as developer;
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:flutter_timezone/timezone_info.dart';
+import 'package:go_router/go_router.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -17,6 +17,10 @@ class NotificationServices {
   NotificationServices._internal();
 
   // ------------------------------------
+  // -------- Private Static NavigatorKey --------
+  static final GlobalKey<NavigatorState> _navigatorKey =
+      GlobalKey<NavigatorState>();
+  static GlobalKey<NavigatorState> get navigatorKey => _navigatorKey;
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -25,7 +29,17 @@ class NotificationServices {
   static void notificationTapBackground(
     NotificationResponse notificationResponse,
   ) {
-    print("Background notification tapped: ${notificationResponse.id}");
+    final int? id = notificationResponse.id;
+    switch (id) {
+      case 2 || 3:
+        final context = _navigatorKey.currentContext;
+        if (context != null) {
+          GoRouter.of(context).go("/settings");
+        }
+        break;
+      default:
+        break;
+    }
   }
 
   Future<void> init() async {
@@ -56,9 +70,7 @@ class NotificationServices {
     await flutterLocalNotificationsPlugin.initialize(
       settings,
       onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
-      onDidReceiveNotificationResponse: (NotificationResponse response) {
-        print('Notification tapped: ${response.id}');
-      },
+      onDidReceiveNotificationResponse: notificationTapBackground,
     );
   }
 
@@ -74,25 +86,6 @@ class NotificationServices {
       print('Error checking Android notification permission: $e');
     }
     return true;
-  }
-
-  NotificationDetails _defaultNotificationDetails() {
-    return const NotificationDetails(
-      android: AndroidNotificationDetails(
-        icon: '@mipmap/ic_launcher',
-        'scheduled_channel',
-        'Scheduled Notifications',
-        channelDescription: 'Scheduled notifications channel',
-        importance: Importance.max,
-        priority: Priority.high,
-        playSound: true,
-      ),
-      iOS: DarwinNotificationDetails(
-        presentAlert: true,
-        presentBadge: true,
-        presentSound: true,
-      ),
-    );
   }
 
   String getLocalTimeZoneName() {
@@ -171,7 +164,7 @@ class NotificationServices {
       print("Error: Scheduled date must be in the future");
       return;
     }
-    log("scedual");
+    developer.log("scedual");
 
     // 1. تأكد من تهيئة timezone أولاً
     tz.initializeTimeZones();
@@ -213,11 +206,95 @@ class NotificationServices {
     );
   }
 
+  Future<void> showDailyNotification({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime scheduledDate,
+  }) async {
+    if (scheduledDate.isBefore(DateTime.now())) {
+      print("Error: Scheduled date must be in the future");
+      return;
+    }
+    developer.log("scedual");
+
+    // 1. تأكد من تهيئة timezone أولاً
+    tz.initializeTimeZones();
+
+    // 2. احصل على الـ timezone المحلي
+    final TimezoneInfo timeZone = await FlutterTimezone.getLocalTimezone();
+    final String currentTimeZone = timeZone.identifier;
+
+    // 3. عيّن الـ location
+    tz.setLocalLocation(tz.getLocation(currentTimeZone));
+
+    const NotificationDetails details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        icon: '@mipmap/ic_launcher',
+        'scheduled_channel',
+        'Scheduled Notifications',
+        channelDescription: 'Scheduled notifications channel',
+        importance: Importance.max,
+        priority: Priority.high,
+        playSound: true,
+      ),
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
+    );
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      tz.TZDateTime.from(
+        scheduledDate,
+        tz.local,
+      ), // استخدم tz.local بعد التهيئة
+      details,
+      androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
+  }
+
   Future<void> cancelNotification({required int id}) async {
     await flutterLocalNotificationsPlugin.cancel(id);
   }
 
   Future<void> cancelAllNotifications() async {
     await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
+  Future<void> showRepetedDurationNotification({
+    required int id,
+    required String title,
+    required String body,
+    required Duration time,
+  }) async {
+    const NotificationDetails details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        icon: '@mipmap/ic_launcher',
+        'scheduled_channel',
+        'Scheduled Notifications',
+        channelDescription: 'Scheduled notifications channel',
+        importance: Importance.max,
+        priority: Priority.high,
+        playSound: true,
+      ),
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
+    );
+    flutterLocalNotificationsPlugin.periodicallyShowWithDuration(
+      id,
+      title,
+      body,
+      time,
+      details,
+    );
   }
 }

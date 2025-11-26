@@ -11,10 +11,29 @@ class QuranCubit extends Cubit<QuranState> {
 
   List<SuraEntity> filteredSuras = [];
 
+  String normalizeText(String text) {
+    // 🔹 إزالة التشكيل العربي
+    final diacritics = RegExp(r'[\u0617-\u061A\u064B-\u0652]');
+    // 🔹 إزالة كل الرموز الغريبة (زي الفواصل، الشرط، الأقواس، إلخ)
+    final symbols = RegExp(r'[^\w\s\u0600-\u06FF]');
+    // 🔹 حوّل النص لحروف صغيرة ونظّفه
+    return text
+        .replaceAll(diacritics, '')
+        .replaceAll(symbols, '')
+        .toLowerCase()
+        .trim();
+  }
+
   void searchSuras(String query) {
     final lowerQuery = query.trim().toLowerCase();
     if (lowerQuery.isEmpty) {
       filteredSuras = quranSuras;
+    } else {
+      filteredSuras = quranSuras.where((sura) {
+        final ar = normalizeText(sura.arName).replaceAll(" ", "").toLowerCase();
+        final en = normalizeText(sura.enName).replaceAll(" ", "").toLowerCase();
+        return ar.contains(lowerQuery) || en.contains(lowerQuery);
+      }).toList();
     }
     emit(QuranSearchState(filteredSuras));
   }

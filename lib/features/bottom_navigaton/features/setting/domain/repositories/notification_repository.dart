@@ -1,7 +1,7 @@
 import 'package:adhan/adhan.dart';
 
 abstract class NotificationRepository {
-  void azkarNotification({required bool isActive, required int timefreuency});
+  void azkarNotification({required bool isActive, required int minutes});
   void morningAzkarNotification({
     required bool isActive,
     required Duration time,

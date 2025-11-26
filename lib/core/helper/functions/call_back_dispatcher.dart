@@ -1,53 +1,31 @@
 import 'dart:developer';
-
 import 'package:flutter/widgets.dart';
-import 'package:atrega/core/helper/functions/notification_services.dart';
-import 'package:atrega/features/bottom_navigaton/features/setting/data/functions/azkar_notification_impl.dart';
 import 'package:workmanager/workmanager.dart';
 
 @pragma('vm:entry-point')
 void callbackDispatcher() {
+  Workmanager().executeTask((task, inputData) async {
+    print("Background task: $task");
+    // Your background work here
+    return Future.value(true);
+  });
+}
+
+@pragma('vm:entry-point')
+void callbackDispatchers() {
   WidgetsFlutterBinding.ensureInitialized();
 
   Workmanager().executeTask((task, inputData) async {
+    log("Callback executed for task: $task");
+
     try {
-      log("Callback executed for task: $task");
+      // log("Callback executed for task: $task");
 
-      final notifications = NotificationServices();
-      await notifications.init();
+      // // Initialize notifications properly
+      // await PrayNotificationServices.init();
 
-      switch (task) {
-        case "morningAzkarNotification":
-          log("morningAzkarNotification");
-          await AzkarNotificationImpl.morningAzkarNotification(
-            hour: inputData?["hour"],
-            minute: inputData?["minute"],
-            id: inputData?["id"],
-          );
-          break;
-
-        case "eveningAzkarNotification":
-          log("eveningAzkarNotification");
-          await AzkarNotificationImpl.eveningAzkarNotification(
-            hour: inputData?["hour"],
-            minute: inputData?["minute"],
-            id: inputData?["id"],
-          );
-          break;
-
-        case "azkar":
-          log("azkar");
-          await AzkarNotificationImpl.azkarNotification();
-          break;
-
-        case "pray":
-          log("pray");
-          await AzkarNotificationImpl.prayNotification();
-          break;
-
-        default:
-          log("Unknown task: $task");
-      }
+      // // Call your notifications
+      // await PrayNotificationImpl.prayNotification();
 
       return Future.value(true);
     } catch (e, st) {

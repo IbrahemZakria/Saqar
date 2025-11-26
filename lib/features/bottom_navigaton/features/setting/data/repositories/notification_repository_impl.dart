@@ -1,27 +1,48 @@
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:adhan/adhan.dart' show PrayerTimes;
-import 'package:flutter/foundation.dart';
 import 'package:atrega/core/helper/functions/notification_services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:atrega/features/bottom_navigaton/features/setting/data/functions/praytime.dart';
-import 'package:atrega/features/bottom_navigaton/features/setting/data/functions/azkar_notification_impl.dart';
 import 'package:atrega/features/bottom_navigaton/features/setting/domain/repositories/notification_repository.dart';
 import 'package:workmanager/workmanager.dart';
 
 class NotificationRepositoryImpl extends NotificationRepository {
   @override
-  void azkarNotification({required bool isActive, required int timefreuency}) {
+  Future<void> azkarNotification({
+    required bool isActive,
+    required int minutes,
+  }) async {
+    List<String> azkarList = [
+      "سُبْحَانَ اللهِ",
+      "الْحَمْدُ لِلَّهِ",
+      "اللَّهُ أَكْبَرُ",
+      "لَا إِلَهَ إِلَّا اللهُ",
+      "سُبْحَانَ اللهِ وَبِحَمْدِهِ",
+      "سُبْحَانَ اللَّهِ الْعَظِيمِ",
+      "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+      "سُبْحَانَ رَبِّيَ الْأَعْلَى",
+      "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
+      "اللَّهُ أَكْبَرُ كَبِيرًا",
+      "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+      "سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَاللَّهُ أَكْبَرُ",
+      "رَبِّ لَا إِلٰهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ",
+      "رَبِّ إِنِّي مَسَّنِيَ الضُّرُّ وَأَنْتَ أَرْحَمُ الرَّاحِمِينَ",
+      "اللَّهُمَّ آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+      "سُبْحَانَ اللهِ وَبِحَمْدِهِ، سُبْحَانَ رَبِّيَ الْعَظِيمِ",
+      "اللَّهُمَّ اهْدِنَا لِلصِّرَاطِ الْمُسْتَقِيمِ",
+    ];
+
+    final String body = azkarList[Random().nextInt(azkarList.length)];
     if (isActive) {
-      Workmanager().registerPeriodicTask(
-        "azkar",
-        "azkar",
-        tag: "notification",
-        frequency: Duration(minutes: timefreuency),
+      await NotificationServices().showRepetedDurationNotification(
+        id: 1,
+        title: "ذَكِر",
+        body: body,
+        time: Duration(minutes: minutes),
       );
-      debugPrint('Registered azkar_daily every $timefreuency minutes');
     } else {
-      Workmanager().cancelByUniqueName("azkar_daily");
-      debugPrint('Cancelled azkar_daily');
+      NotificationServices().cancelNotification(id: 1);
     }
   }
 
@@ -31,21 +52,19 @@ class NotificationRepositoryImpl extends NotificationRepository {
     required Duration time,
   }) async {
     if (isActive) {
-      Workmanager().registerPeriodicTask(
-        inputData: {
-          "id": 1,
-          "hour": time.inHours,
-          "minute": time.inMinutes % 60,
-        },
-
-        "eveningAzkarNotification",
-        "eveningAzkarNotification",
-        tag: "notification",
-        frequency: Duration(days: 1),
+      NotificationServices().showDailyNotification(
+        id: 2,
+        title: "أذكار المساء",
+        body: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+        scheduledDate: DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+          DateTime.now().day,
+        ).add(Duration(hours: time.inHours, minutes: time.inMinutes % 60)),
       );
       debugPrint('Registered eveningAzkarNotification every day');
     } else {
-      Workmanager().cancelByUniqueName("eveningAzkarNotification");
+      NotificationServices().cancelNotification(id: 2);
       debugPrint('Cancelled eveningAzkarNotification');
     }
   }
@@ -56,20 +75,20 @@ class NotificationRepositoryImpl extends NotificationRepository {
     required Duration time,
   }) async {
     if (isActive) {
-      Workmanager().registerPeriodicTask(
-        inputData: {
-          "id": 1,
-          "hour": time.inHours,
-          "minute": time.inMinutes % 60,
-        },
-        "morningAzkarNotification",
-        "morningAzkarNotification",
-        tag: "notification",
-        frequency: Duration(days: 1),
+      NotificationServices().showDailyNotification(
+        id: 3,
+        title: "أذكار الصباح",
+        body: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+        scheduledDate: DateTime(
+          DateTime.now().year,
+          DateTime.now().month,
+          DateTime.now().day,
+        ).add(Duration(hours: time.inHours, minutes: time.inMinutes % 60)),
       );
       debugPrint('Registered morningAzkarNotification every day');
     } else {
-      Workmanager().cancelByUniqueName("morningAzkarNotification");
+      NotificationServices().cancelNotification(id: 3);
+
       debugPrint('Cancelled morningAzkarNotification');
     }
   }

@@ -1,24 +1,40 @@
 import 'package:equatable/equatable.dart';
 
 class TasbeehState extends Equatable {
-  final int count;
-  final double angle;
-  final int currentIndex;
+  final String selectedCategory;
+  final String selectedZikr;
+  final Map<String, int> counts; // 🔹 لكل ذكر عداده الخاص
 
   const TasbeehState({
-    required this.count,
-    required this.angle,
-    required this.currentIndex,
+    required this.selectedCategory,
+    required this.selectedZikr,
+    required this.counts,
   });
 
-  TasbeehState copyWith({int? count, double? angle, int? currentIndex}) {
+  TasbeehState copyWith({
+    String? selectedCategory,
+    String? selectedZikr,
+    Map<String, int>? counts,
+  }) {
     return TasbeehState(
-      count: count ?? this.count,
-      angle: angle ?? this.angle,
-      currentIndex: currentIndex ?? this.currentIndex,
+      selectedCategory: selectedCategory ?? this.selectedCategory,
+      selectedZikr: selectedZikr ?? this.selectedZikr,
+      counts: counts ?? this.counts,
     );
   }
 
   @override
-  List<Object> get props => [count, angle, currentIndex];
+  List<Object> get props => [selectedCategory, selectedZikr, counts];
+
+  Map<String, dynamic> toMap() => {
+    'selectedCategory': selectedCategory,
+    'selectedZikr': selectedZikr,
+    'counts': counts,
+  };
+
+  factory TasbeehState.fromMap(Map<String, dynamic> m) => TasbeehState(
+    selectedCategory: m['selectedCategory'] as String,
+    selectedZikr: m['selectedZikr'] as String,
+    counts: Map<String, int>.from(m['counts'] as Map),
+  );
 }

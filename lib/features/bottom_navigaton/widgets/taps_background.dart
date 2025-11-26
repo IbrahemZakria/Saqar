@@ -26,14 +26,6 @@ class TapsBackground extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              right: 16,
-              top: 8,
-              child: Visibility(
-                visible: notificationVisale,
-                child: NotificationIcon(),
-              ),
-            ),
-            Positioned(
               right: 32,
               left: 32,
               top: 16,
@@ -60,6 +52,14 @@ class TapsBackground extends StatelessWidget {
                 top: height * .23,
                 bottom: 0,
                 child: Container(child: widget),
+              ),
+              Positioned(
+                right: 16,
+                top: 8,
+                child: Visibility(
+                  visible: notificationVisale,
+                  child: NotificationIcon(),
+                ),
               ),
             ],
           ],

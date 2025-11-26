@@ -38,24 +38,6 @@ class WorkManagerService {
     _registeredTasks.add(uniqueName);
   }
 
-  /// Register a one-off background task.
-  Future<void> registerOneOffTask({
-    required String uniqueName,
-    String? taskName,
-    Duration initialDelay = Duration.zero,
-    Map<String, dynamic>? inputData,
-  }) async {
-    if (!_initialized) await init();
-    final tn = taskName ?? uniqueName;
-    await Workmanager().registerOneOffTask(
-      uniqueName,
-      tn,
-      initialDelay: initialDelay,
-      inputData: inputData,
-    );
-    _registeredTasks.add(uniqueName);
-  }
-
   /// Cancel a task by its unique name.
   Future<void> cancelByUniqueName(String uniqueName) async {
     await Workmanager().cancelByUniqueName(uniqueName);

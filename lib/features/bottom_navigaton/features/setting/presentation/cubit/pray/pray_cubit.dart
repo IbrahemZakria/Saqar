@@ -18,10 +18,7 @@ class PrayerCubit extends Cubit<PrayerState> {
   }
 
   void azkarNotification({required bool isActive, required int timefreuency}) {
-    repository.azkarNotification(
-      isActive: isActive,
-      timefreuency: timefreuency,
-    );
+    repository.azkarNotification(isActive: isActive, minutes: timefreuency);
   }
 
   void eveningAzkarNotification({

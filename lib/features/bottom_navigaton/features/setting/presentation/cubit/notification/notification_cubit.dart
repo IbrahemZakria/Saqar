@@ -1,19 +1,15 @@
 import 'package:atrega/features/bottom_navigaton/features/setting/domain/repositories/notification_repository.dart';
-import 'package:bloc/bloc.dart';
+import 'package:atrega/features/bottom_navigaton/features/setting/presentation/cubit/notification/notification_state.dart';
 import 'package:flutter/material.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-import 'notification_state.dart';
-
-class NotificationCubit extends Cubit<NotificationState> {
+class NotificationCubit extends HydratedCubit<NotificationState> {
   NotificationCubit(this.repository) : super(const NotificationState());
 
   final NotificationRepository repository;
 
   void azkarNotification({required bool isActive, required int timefreuency}) {
-    repository.azkarNotification(
-      isActive: isActive,
-      timefreuency: timefreuency,
-    );
+    repository.azkarNotification(isActive: isActive, minutes: timefreuency);
     emit(state.copyWith(dailyAzkar: isActive, dailyInterval: timefreuency));
   }
 
@@ -40,7 +36,6 @@ class NotificationCubit extends Cubit<NotificationState> {
     emit(state.copyWith(adanEnabled: isActive));
   }
 
-  // Convenience used by NotificationIcon
   void toggleAdan(bool v) => prayNotification(isActive: v);
 
   void updateSwitch(String title, bool value, TimeOfDay time) {
@@ -64,5 +59,45 @@ class NotificationCubit extends Cubit<NotificationState> {
         prayNotification(isActive: value);
         break;
     }
+  }
+
+  // ------------------- Hydration -------------------
+
+  @override
+  NotificationState? fromJson(Map<String, dynamic> json) {
+    try {
+      return NotificationState(
+        morningAzkar: json['morningAzkar'] ?? false,
+        eveningAzkar: json['eveningAzkar'] ?? false,
+        dailyAzkar: json['dailyAzkar'] ?? false,
+        adanEnabled: json['adanEnabled'] ?? false,
+        morningTime: TimeOfDay(
+          hour: json['morningHour'] ?? 6,
+          minute: json['morningMinute'] ?? 30,
+        ),
+        eveningTime: TimeOfDay(
+          hour: json['eveningHour'] ?? 19,
+          minute: json['eveningMinute'] ?? 0,
+        ),
+        dailyInterval: json['dailyInterval'] ?? 30,
+      );
+    } catch (_) {
+      return const NotificationState();
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(NotificationState state) {
+    return {
+      'morningAzkar': state.morningAzkar,
+      'eveningAzkar': state.eveningAzkar,
+      'dailyAzkar': state.dailyAzkar,
+      'adanEnabled': state.adanEnabled,
+      'morningHour': state.morningTime.hour,
+      'morningMinute': state.morningTime.minute,
+      'eveningHour': state.eveningTime.hour,
+      'eveningMinute': state.eveningTime.minute,
+      'dailyInterval': state.dailyInterval,
+    };
   }
 }
